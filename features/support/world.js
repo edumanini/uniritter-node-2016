@@ -24,7 +24,7 @@ function World() {
 				json: payload,
 				headers: headers
 			})
-			.spread((response) => response);
+			.spread((response) => response );
 		});
 	};
 }

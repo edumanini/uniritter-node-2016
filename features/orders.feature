@@ -9,8 +9,7 @@ Scenario: posting order
     And the new order id
 
 Scenario Outline: verify order status
-  Given an existing order
-  And with an <s> status
+  Given an existing order with a <s> status
   When I search this order
   Then I receive the order data
   And its status is <s>
