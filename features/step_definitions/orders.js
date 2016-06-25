@@ -81,10 +81,6 @@ module.exports = function () {
     
     
     this.Given(/^an invalid order that (.*)$/, function (condition) {
-        //const 
-            //that = this;
-        //var payload;
-            
         if(condition=="is missing an item quantity")
         {
             this.payload = {
@@ -124,6 +120,12 @@ module.exports = function () {
     });
     
     this.Then(/I receive an error response$/, function () {
-        expect(this.error.errors[0].message).not.to.be.undefined;
+        console.log(this.error.body.errors[0].validation.keys[0]);
+        expect(this.error.body.errors[0].validation.keys[0]).to.equal("data.attributes.items.0.quantity");
     });
+    
+   /* this.Then(/a message saying that(.*)$/, function (notification) {
+        console.log(notification);
+        //expect(this.error.errors[0].message).not.to.be.undefined;
+    });*/
 }
