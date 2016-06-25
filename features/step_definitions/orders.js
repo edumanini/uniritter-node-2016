@@ -17,7 +17,6 @@ module.exports = function () {
                 }
             }
         
-
         return this.doHttpRequest('orders', 'post', payload)
         .then((response) => {
             that.existingOrder = response.body;
@@ -42,5 +41,89 @@ module.exports = function () {
     
     this.Then(/^its status is (.*)$/, function (status) {
         expect(this.responseBody.data.attributes.status).to.equal(status);
+    });
+    
+    
+    
+    this.Given(/^a valid order$/, function () {
+        this.payload = {
+            data: {
+                type: 'orders',
+                attributes: {
+                    status: "new",
+                    items: [{ product_id: '598b04ea-8c20-4240-9c2b-1d36350a8d33', quantity: 1}]
+                    }
+                }
+            }
+    });
+    
+    this.When(/^I submit it to the API$/, function () {
+        const 
+            that = this;
+        return this.doHttpRequest('orders', 'post', that.payload)
+        .then((response) => {
+            that.responseBody = response.body;
+            return response;
+        })
+        .catch(error => {
+            that.error = error;
+            return error;
+        })
+    });
+    
+    this.Then(/^I receive a success message$/, function () {
+        expect(this.responseBody.data).not.to.be.undefined;
+    });
+    
+    this.Then(/^the new order id$/, function () {
+        expect(this.responseBody.data.id).not.to.be.undefined;
+    });
+    
+    
+    this.Given(/^an invalid order that (.*)$/, function (condition) {
+        //const 
+            //that = this;
+        //var payload;
+            
+        if(condition=="is missing an item quantity")
+        {
+            this.payload = {
+                data: {
+                    type: 'orders',
+                    attributes: {
+                        status: "new",
+                        items: [{ product_id: '598b04ea-8c20-4240-9c2b-1d36350a8d33', quantity: 0}]
+                        }
+                    }
+                };
+        }
+        if(condition=="has an invalid format in product_id")
+        {
+           this.payload = {
+                data: {
+                    type: 'orders',
+                    attributes: {
+                        status: "new",
+                        items: [{ product_id: 'xxx', quantity: 1}]
+                        }
+                    }
+                };
+        }
+        if(condition=="refers an inexistend product")
+        {
+            this.payload = {
+                data: {
+                    type: 'orders',
+                    attributes: {
+                        status: "new",
+                        items: [{ product_id: '598b04ea-8c20-4240-9c2b-1d36350a7d30', quantity: 1}]
+                        }
+                    }
+                }
+        }
+    });
+    
+    this.Then(/I receive an error response$/, function () {
+        expect(this.error.errors[0].message).not.to.be.undefined;
     });
 }
