@@ -23,11 +23,14 @@ module.exports = function (config) {
         }], () => {
             _.each(require_dir(module, './routes'), route => {
                 route(server);
-            })
+            });
             
             _.each(require_dir(module, './models'), model => {
                 model(server);
-            })
+            });
+            
+            //require_dir(module, './services');
+            require('./services/payment.js')
 
             server.start(function() {
                 console.info('listening on port ' + server.info.port)

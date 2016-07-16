@@ -1,6 +1,6 @@
 {
   "name": "hapi-harvester-boilerplate",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Boilerplate app for a hapi-harvester API",
   "main": "index.js",
   "scripts": {
@@ -33,7 +33,10 @@
     "lodash": "^4.11.1",
     "mongoose": "^4.4.19",
     "require-directory": "^2.1.1",
+    "rx": "^4.1.0",
+    "rx-node": "^1.0.2",
     "susie": "^2.0.0",
+    "uuid": "^2.0.2",
     "vision": "^4.1.0"
   },
   "devDependencies": {
