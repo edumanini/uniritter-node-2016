@@ -42,9 +42,6 @@ module.exports = function () {
         expect(this.responseBody.data.attributes.status).to.equal(status);
     });
     
-<<<<<<< HEAD
-    
-    
     this.Given(/^a valid order$/, function () {
         this.payload = {
             data: {
@@ -134,3 +131,5 @@ module.exports = function () {
     });
     
 }
+
+//teste
