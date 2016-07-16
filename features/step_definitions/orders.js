@@ -3,15 +3,14 @@ module.exports = function () {
         _ = require('lodash'),
         chai = require('chai'),
         expect = chai.expect;
-        
-    this.Given(/^an existing order with a (.*) status$/, function (status) {
+
+    this.Given(/^an existing order with a new status$/, function () {
         const 
             that = this,
             payload = {
             data: {
                 type: 'orders',
                 attributes: {
-                    status: status,
                     items: [{ product_id: '598b04ea-8c20-4240-9c2b-1d36350a8d33', quantity: 1}]
                     }
                 }
@@ -43,4 +42,9 @@ module.exports = function () {
     this.Then(/^its status is (.*)$/, function (status) {
         expect(this.responseBody.data.attributes.status).to.equal(status);
     });
+    
+    this.Then(/^wait a few seconds$/, function (callback) {
+        setTimeout(callback, 3000);
+    });
+    
 }

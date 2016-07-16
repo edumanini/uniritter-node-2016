@@ -16,8 +16,6 @@ Scenario Outline: verify order status
 Examples:
   |     s     |
   | new       |
-  | cancelled |
-  | invoiced  |
 
 Scenario Outline: invalid order
   Given an invalid order that <condition>
@@ -28,13 +26,9 @@ Examples:
   |         condition                   |   notification                |
   | is missing an item quantity         | item.quantity is mandatory    |
   | has an invalid format in product_id | product_id must be a uuid     |
-  | refers an inexistend product        | product was not found         |
 
-Scenario: order cancellation
-  Given an order in a 'new' status
-  When I ask to cancel it
-  Then I receive a success message
-  And my order status turns to 'cancelled'
-
-
-      
+Scenario: order payment
+    Given a valid order
+    When I submit it to the API
+    And wait a few seconds
+    Then it moves to a paid status

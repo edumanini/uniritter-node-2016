@@ -4,3 +4,4 @@
 [![Known Vulnerabilities](https://snyk.io/test/github/dclucas/uniritter-node-2016/badge.svg)](https://snyk.io/test/github/dclucas/uniritter-node-2016)
 
 Sample code for the node.js-based web engineering classes at UniRitter.
+
