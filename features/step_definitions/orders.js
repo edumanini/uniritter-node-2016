@@ -47,7 +47,6 @@ module.exports = function () {
             data: {
                 type: 'orders',
                 attributes: {
-                    status: "new",
                     items: [{ product_id: '598b04ea-8c20-4240-9c2b-1d36350a8d33', quantity: 1}]
                     }
                 }
@@ -84,7 +83,7 @@ module.exports = function () {
                 data: {
                     type: 'orders',
                     attributes: {
-                        status: "new",
+                        //status: "new",
                         items: [{ product_id: '598b04ea-8c20-4240-9c2b-1d36350a8d33', quantity: 0}]
                         }
                     }
@@ -96,40 +95,29 @@ module.exports = function () {
                 data: {
                     type: 'orders',
                     attributes: {
-                        status: "new",
+                        //status: "new",
                         items: [{ product_id: 'xxx', quantity: 1}]
                         }
                     }
                 };
         }
-        if(condition=="refers an inexistend product")
-        {
-            this.payload = {
-                data: {
-                    type: 'orders',
-                    attributes: {
-                        status: "new",
-                        items: [{ product_id: '598b04ea-8c20-4240-9c2b-1d36350a7d30', quantity: 1}]
-                        }
-                    }
-                }
+    });
+    
+   this.Then(/^I receive an error response$/, function () {
+    	expect(this.error.body).not.to.be.undefined;
+    });
+
+    this.Then(/^a message saying that (.*)$/, function (notification) {
+        if(notification=="item.quantity is mandatory") {
+	        expect(this.error.body.errors[0].validation.keys[0]).to.equal("data.attributes.items.0.quantity");
+        }
+        if(notification=="product_id must be a uuid") {
+	        expect(this.error.body.errors[0].validation.keys[0]).to.equal("data.attributes.items.0.product_id");
         }
     });
-    
-    this.Then(/I receive an error response$/, function () {
-        console.log(this.error.body.errors[0].validation.keys[0]);
-        expect(this.error.body.errors[0].validation.keys[0]).to.equal("data.attributes.items.0.quantity");
-    });
-    
-   /* this.Then(/a message saying that(.*)$/, function (notification) {
-        console.log(notification);
-        //expect(this.error.errors[0].message).not.to.be.undefined;
-    });*/
 
     this.Then(/^wait a few seconds$/, function (callback) {
         setTimeout(callback, 3000);
     });
     
 }
-
-//teste
