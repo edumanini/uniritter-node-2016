@@ -83,7 +83,6 @@ module.exports = function () {
                 data: {
                     type: 'orders',
                     attributes: {
-                        //status: "new",
                         items: [{ product_id: '598b04ea-8c20-4240-9c2b-1d36350a8d33', quantity: 0}]
                         }
                     }
@@ -95,7 +94,6 @@ module.exports = function () {
                 data: {
                     type: 'orders',
                     attributes: {
-                        //status: "new",
                         items: [{ product_id: 'xxx', quantity: 1}]
                         }
                     }
@@ -118,6 +116,19 @@ module.exports = function () {
 
     this.Then(/^wait a few seconds$/, function (callback) {
         setTimeout(callback, 3000);
+    });
+    
+    this.Then(/^it moves to a paid status$/, function () {
+        const 
+            that = this,
+            id = that.responseBody.data.id;
+       
+        return this.doHttpRequest('orders/' + id, 'get', undefined)
+        .then((response) => {
+            that.responseBody = JSON.parse(response.body);
+            expect(that.responseBody.data.attributes.status).to.equal("paid");
+        });
+        
     });
     
 }
