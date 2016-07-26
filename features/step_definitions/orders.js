@@ -118,6 +118,16 @@ module.exports = function () {
         if(notification=="product_id must be a uuid") {
 	        expect(this.error.body.errors[0].validation.keys[0]).to.equal("data.attributes.items.0.product_id");
         }
+        
+        //Inicio de teste de products
+        if(notification=="item.name is mandatory") {
+	        expect(this.error.body.errors[0].validation.keys[0]).to.equal("data.attributes.name");
+        }
+         if(notification=="product price must be a equal or greater than zero") {
+	        expect(this.error.body.errors[0].validation.keys[0]).to.equal("data.attributes.price");
+        }
+        //Fim de teste de products
+        
     });
 
     this.Then(/^wait a few seconds$/, function (callback) {

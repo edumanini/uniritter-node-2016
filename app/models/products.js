@@ -13,7 +13,7 @@ module.exports = function (server) {
             type: 'products',
             attributes: {
                 name: Types.string(),
-                price: Types.number(),
+                price: Types.number().min(0),
                 brand: Types.string(),
                 model: Types.string()
             }
