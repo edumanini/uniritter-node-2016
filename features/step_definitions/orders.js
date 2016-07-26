@@ -56,7 +56,13 @@ module.exports = function () {
     this.When(/^I submit it to the API$/, function () {
         const 
             that = this;
-        return this.doHttpRequest('orders', 'post', that.payload)
+        
+        //Nao sei porque tanto os testos de orders quanto os testes de products estao chamando este metodo.
+        //Como solucao tive que criar as variaveis type e obj
+        var type = (that.payload != undefined) ? 'orders' : 'products';
+        var obj = (that.payload != undefined) ? that.payload : that.product;
+        
+        return this.doHttpRequest(type, 'post', obj)
         .then((response) => {
             that.responseBody = response.body;
             return response;
